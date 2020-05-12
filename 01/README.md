@@ -1,3 +1,4 @@
+- [通过自定义资源扩展Kubernetes](https://blog.gmem.cc/crd)
 - [client-go workqueue demo](https://www.cnblogs.com/wangjq19920210/p/11551825.html)
 
 
