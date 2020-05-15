@@ -19,6 +19,7 @@ import (
 	testresourceclienteset "ycliu912.github.io/kubernetes-test-controller/lib/testresource/generated/clientset/versioned"
 	testresourcescheme "ycliu912.github.io/kubernetes-test-controller/lib/testresource/generated/clientset/versioned/scheme"
 	testresorceinformers "ycliu912.github.io/kubernetes-test-controller/lib/testresource/generated/informers/externalversions"
+	testresoucelisers   "ycliu912.github.io/kubernetes-test-controller/lib/testresource/generated/listers/testresource/v1beta1"
 	testresourcev1beta1 "ycliu912.github.io/kubernetes-test-controller/lib/testresource/v1beta1"
 )
 
@@ -27,7 +28,7 @@ type Controller struct {
 	apiextenssionsclientset  apiextenssionsclientset.Interface
 	testresourceclientset  testresourceclienteset.Interface
 	informer    cache.SharedIndexInformer
-	lister  record.EventRecorder
+	lister  testresoucelisers.TestResourceLister
 	recorder record.EventRecorder
 	workqueue   workqueue.RateLimitingInterface
 }
@@ -66,7 +67,7 @@ func NewController() *Controller {
 	eventBroadcaster.StartRecordingToSink(&typedcorev1.EventSinkImpl{Interface: kubeClient.CoreV1().Events("")})
 	recorder := eventBroadcaster.NewRecorder(testresourcescheme.Scheme, corev1.EventSource{Component: "testresource-controller"})
 
-	workqueue ：= workqueue.NewRateLimitingQueue(workqueue.DefaultControllerRateLimiter())
+	workqueue := workqueue.NewRateLimitingQueue(workqueue.DefaultControllerRateLimiter())
 
 	return &Controller{
 		kubeclientset: kubeClient,

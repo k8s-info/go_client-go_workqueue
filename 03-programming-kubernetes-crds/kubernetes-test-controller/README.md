@@ -1,3 +1,5 @@
+[Programming Kubernetes CRDs](https://insujang.github.io/2020-02-13/programming-kubernetes-crd/)
+
 需要注意的地方：
 
 留意导入的包，少一不小心就会导入无用的包，编译报错

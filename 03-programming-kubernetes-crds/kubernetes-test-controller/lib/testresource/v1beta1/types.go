@@ -33,7 +33,7 @@ type TestResource struct {
 	Status string           `json:"status"`
 }
 
-// +k8s:deepcopy-gen:interface=k8s.io/apimachinery/pkg/runtime.Object
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // TestResourceList is a list of TestResource resources.
 type TestResourceList struct {
