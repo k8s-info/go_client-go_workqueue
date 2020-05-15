@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"os"
+	"path/filepath"
 	"time"
 
 	corev1 "k8s.io/api/core/v1"
@@ -34,9 +36,18 @@ type Controller struct {
 }
 
 func NewController() *Controller {
-	kubeconfig := os.Getenv("KUBECONFIG")
+	// change kubeconfig
+	//kubeconfig := os.Getenv("KUBECONFIG")
 
-	config, err := clientcmd.BuildConfigFromFlags("", kubeconfig)
+	var kubeconfig *string
+	if home := homeDir(); home != "" {
+		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
+	} else {
+		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+	}
+	flag.Parse()
+
+	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfig)
 	if err != nil {
 		klog.Fatal(err.Error())
 	}
@@ -105,4 +116,11 @@ func (c *Controller) Run() {
 func main() {
 	Controller := NewController()
 	Controller.Run()
+}
+
+func homeDir() string {
+	if h := os.Getenv("HOME"); h != "" {
+		return h
+	}
+	return os.Getenv("USERPROFILE") // windows
 }
