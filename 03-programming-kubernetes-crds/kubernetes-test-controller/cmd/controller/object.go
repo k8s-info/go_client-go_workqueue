@@ -10,7 +10,7 @@ import (
 func (c *Controller) CreateObject() error {
 	object := &testresourcev1beta1.TestResource{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "exaple-tr2",
+			Name:      "example-tr2",
 			Namespace: corev1.NamespaceDefault,
 		},
 		Spec: testresourcev1beta1.TestResourceSpec{
