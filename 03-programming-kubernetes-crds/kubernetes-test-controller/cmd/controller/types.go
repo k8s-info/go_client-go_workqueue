@@ -91,27 +91,6 @@ func NewController() *Controller {
 	}
 }
 
-func (c *Controller) Run() {
-	defer utilruntime.HandleCrash()
-	defer c.workqueue.ShutDown()
-
-	klog.Info("Waiting cache to be synced.")
-	// Handle timeout for syncing.
-	timeout := time.NewTicker(time.Second * 30)
-	timeoutCh := make(chan struct{})
-
-	go func() {
-		<-timeout.C
-		timeoutCh <- struct{}{}
-	}()
-	if ok := cache.WaitForCacheSync(timeoutCh, c.informer.HasSynced); !ok {
-		klog.Fatal("Timeout expired during waiting for caches to sync.")
-	}
-
-	klog.Infoln("Starting custom controller.")
-	select {}
-}
-
 func homeDir() string {
 	if h := os.Getenv("HOME"); h != "" {
 		return h
