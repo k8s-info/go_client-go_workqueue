@@ -40,3 +40,13 @@ E0515 18:20:45.282751   27264 reflector.go:156] pkg/mod/k8s.io/client-go@v0.17.0
 
 ```
 
+---
+DONE:
+```bash
+/bin/go build -o /private/var/folders/k8/t39hjy910bx2gh5k1ztk7fbc0000gn/T/___go_build_ycliu912_github_io_kubernetes_test_controller_cmd_controller ycliu912.github.io/kubernetes-test-controller/cmd/controller #gosetup
+/private/var/folders/k8/t39hjy910bx2gh5k1ztk7fbc0000gn/T/___go_build_ycliu912_github_io_kubernetes_test_controller_cmd_controller #gosetup
+I0518 14:00:16.266883   29230 types.go:64] Added: %v&{{TestResource ycliu912.github.io/v1beta1} {exaple-tr2  default /apis/ycliu912.github.io/v1beta1/namespaces/default/testresources/exaple-tr2 fd9b86e0-beb7-41f3-b7fd-3af6c0968234 1475740 1 2020-05-18 11:33:08 +0800 CST <nil> <nil> map[] map[] [] []  []} {echo Hello World! asdasd=1234} }
+I0518 14:00:16.313616   29230 main.go:9] testresources.ycliu912.github.io "exaple-tr2" already exists
+I0518 14:00:16.313728   29230 handler.go:20] waiting cache to be synced.
+I0518 14:00:16.313802   29230 handler.go:34] Starting sustom controller.
+```
