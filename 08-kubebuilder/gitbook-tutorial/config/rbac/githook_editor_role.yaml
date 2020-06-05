@@ -1,0 +1,24 @@
+# permissions for end users to edit githooks.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: githook-editor-role
+rules:
+- apiGroups:
+  - tools.my.domain
+  resources:
+  - githooks
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tools.my.domain
+  resources:
+  - githooks/status
+  verbs:
+  - get

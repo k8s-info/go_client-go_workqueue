@@ -1,0 +1,7 @@
+domain: my.domain
+repo: gitlab.com/pongsatt/githook
+resources:
+- group: tools
+  kind: GitHook
+  version: v1alpha1
+version: "2"
