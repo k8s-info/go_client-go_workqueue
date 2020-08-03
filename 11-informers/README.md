@@ -1,0 +1,1 @@
+[Kubernetes 中 Informer 的使用](https://mp.weixin.qq.com/s/75pvMtN2tsLozf9yaN2b4w)
