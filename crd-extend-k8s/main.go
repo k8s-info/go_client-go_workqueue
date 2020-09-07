@@ -11,10 +11,13 @@ import (
 	"k8s.io/apimachinery/pkg/util/wait"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/cache"
 	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/util/homedir"
 	"k8s.io/client-go/util/workqueue"
 	"k8s.io/sample-controller/pkg/signals"
+	"path/filepath"
 	"time"
 )
 
@@ -31,9 +34,9 @@ type Controller struct {
 /* 主函数 */
 
 var (
-	// 参数变量
-	masterURL string
-	kubeconfig string
+// 参数变量
+//masterURL string
+// kubeconfig string
 )
 
 // 启动控制器
@@ -118,12 +121,32 @@ func (c *Controller) processItem(key string) error {
 	return nil
 }
 
+func configInit() (config *rest.Config, err error) {
+	var kubeconfig *string
+	if home := homedir.HomeDir(); home != "" {
+		kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) ablolute path to the kubeconfig file")
+	} else {
+		kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+	}
+	flag.Parse()
+
+	fmt.Println("*kubeconfig: ", *kubeconfig)
+
+	config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
+	return
+}
+
 func main() {
 	// 解析参数，存入上述变量
-	flag.Parse()
-	cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
+	/*	flag.Parse()
+		cfg, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
+		if err != nil {
+			glog.Fatalf("构建kubeconfig失败： %s", err.Error())
+		}*/
+
+	cfg, err := configInit()
 	if err != nil {
-		glog.Fatalf("构建kubeconfig失败： %s", err.Error())
+		glog.Fatalf("解析参数失败： %s", err.Error())
 	}
 
 	// 创建客户端，Clientset 是一系列 K8S API 的集合
@@ -148,7 +171,7 @@ func main() {
 			},
 		},
 		&apiv1.Pod{},
-		0,              // 不进行relist
+		0,                // 不进行relist
 		cache.Indexers{}, // map[string]IndexFunc
 	)
 
@@ -157,7 +180,7 @@ func main() {
 		// 此结构是实现 ResourceEventHandler
 		AddFunc: func(obj interface{}) {
 			// 从对象中抽取 Key
-			key, err := cache.MetaNamespaceIndexFunc(obj)
+			key, err := cache.MetaNamespaceKeyFunc(obj)
 			if err == nil {
 				queue.Add(key)
 			}
@@ -173,8 +196,8 @@ func main() {
 	// 构建控制器对象
 	ctrl := Controller{
 		clientset: clientset,
-		queue: queue,
-		informer: informer,
+		queue:     queue,
+		informer:  informer,
 	}
 
 	// 启动

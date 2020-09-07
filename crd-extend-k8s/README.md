@@ -22,3 +22,14 @@ main.main()
 
 Process finished with exit code 255
 ```
+
+done：
+```bash
+/Users/liuyanchao/.g/versions/1.15/bin/go build -o /private/var/folders/k8/t39hjy910bx2gh5k1ztk7fbc0000gn/T/___go_build_github_com_k8s_info_go_client_go_workqueue github.com/k8s-info/go_client-go_workqueue #gosetup
+/private/var/folders/k8/t39hjy910bx2gh5k1ztk7fbc0000gn/T/___go_build_github_com_k8s_info_go_client_go_workqueue
+*kubeconfig:  /Users/liuyanchao/.kube/config
+&Pod{ObjectMeta:{kube-apiserver-v1.19-control-plane  kube-system /api/v1/namespaces/kube-system/pods/kube-apiserver-v1.19-control-plane 82f4b4cc-5ff9-4227-a62d-8e9e3678289d 441 0 2020-09-07 15:14:22 +0800 CST <nil> <nil> map[component:kube-apiserver tier:control-plane]
+map[kubeadm.kubernetes.io/kube-apiserver.advertise-address.endpoint:172.17.0.2:6443 kubernetes.io/config.hash:40c85a64790448771357c79749c06710 kubernetes.io/config.mirror:40c85a64790448771357c79749c06710 kubernetes.io/config.seen:2020-09-07T07:14:15.576390569Z kubernetes.io/config.source:file] 
+...
+
+```
